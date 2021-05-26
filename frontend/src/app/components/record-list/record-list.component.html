@@ -1,0 +1,66 @@
+<div class="list row">
+  <div class="col-md-8">
+    <div class="input-group mb-3">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Search by title"
+        [(ngModel)]="title"
+      />
+      <div class="input-group-append">
+        <button
+          class="btn btn-outline-secondary"
+          type="button"
+          (click)="searchTitle()"
+        >
+          Search
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <h4>Records List</h4>
+    <ul class="list-group">
+      <li
+        class="list-group-item"
+        *ngFor="let tutorial of records; let i = index"
+        [class.active]="i == currentIndex"
+        (click)="setActiveRecord(tutorial, i)"
+      >
+        {{ tutorial.title }}
+      </li>
+    </ul>
+
+    <button class="m-3 btn btn-sm btn-danger" (click)="removeAllTutorials()">
+      Remove All
+    </button>
+  </div>
+  <div class="col-md-6">
+    <div *ngIf="currentRecord">
+      <h4>Tutorial</h4>
+      <div>
+        <label><strong>Title:</strong></label> {{ currentRecord.title }}
+      </div>
+      <div>
+        <label><strong>Description:</strong></label>
+        {{ currentRecord.description }}
+      </div>
+      <div>
+        <label><strong>Status:</strong></label>
+        {{ currentRecord.published ? "Published" : "Pending" }}
+      </div>
+
+      <a
+        class="badge badge-warning"
+        routerLink="/records/{{ currentRecord._id }}"
+      >
+        Edit
+      </a>
+    </div>
+
+    <div *ngIf="!currentRecord">
+      <br />
+      <p>Please click on a Records...</p>
+    </div>
+  </div>
+</div>
